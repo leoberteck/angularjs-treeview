@@ -1,0 +1,26 @@
+<div class="tree-view">
+    <style>
+        ol {
+            list-style: none
+        };
+    </style>
+    <ol>
+        <li>
+            <div> 
+                {{$ctrl.state}}
+                <button class="btn btn-link" ng-click="$ctrl.onCollapseClick()">
+                    <span class="glyphicon" ng-class="{'glyphicon-chevron-down' : isCollapsed, 'glyphicon-chevron-right' : !isCollapsed}"></span> 
+                </button>
+                <input type="checkbox" ng-checked="$ctrl.node.checked" ng-click="$ctrl.onParentCheckChange()" /> {{$ctrl.node.name}}
+            </div>
+            <ol ng-show="isCollapsed">
+                <li ng-repeat="item in $ctrl.node.items track by $index" >
+                    <div ng-if="item.items == null">
+                        <input type="checkbox" ng-model="item.checked" ng-click="$ctrl.onChildCheckChange(item)" />{{item.name}}
+                    </div>
+                    <treeview ng-if="item.items" node="item" on-state-change="$ctrl.onChildParentStateChange()" ></treeview>
+                </li>
+            </ol>
+        </li>
+    </ol>
+</div>
